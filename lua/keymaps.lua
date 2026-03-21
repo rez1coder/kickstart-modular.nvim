@@ -52,16 +52,68 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
+-- Open the package manager
+vim.keymap.set('n', '<leader>L', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.hl.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function() vim.hl.on_yank() end,
-})
+-- Restart Neovim
+vim.keymap.set('n', '<leader>R', '<cmd>restart<cr>', { desc = 'Restart Neovim' })
+
+-- Better Esc key
+vim.keymap.set('i', 'jk', '<Esc>', { noremap = true })
+
+-- Escape and save changes.
+vim.keymap.set({ 's', 'i', 'n', 'v' }, '<C-s>', '<esc>:w<cr>', { desc = 'Exit insert mode and save changes' })
+
+-- Delete a word on Ctrl-Backspace
+vim.keymap.set({ 'i', 'c' }, '<C-BS>', '<C-w>')
+-- vim.keymap.set({ 'i', 'c' }, '<C-H>', '<C-w>') -- Terminal fallback
+
+-- Delete without yanking
+vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
+
+-- Paste without yanking
+vim.keymap.set('x', '<leader>p', [["_dP]])
+
+-- Make U opposite to u
+vim.keymap.set('n', 'U', '<C-r>', { desc = 'Redo' })
+
+-- Duplicate line(s)
+vim.keymap.set('n', '<A-l>', 'yyp', { noremap = true })
+vim.keymap.set('i', '<A-l>', '<Esc>yyp', { noremap = true })
+vim.keymap.set('v', '<A-l>', 'ygP', { noremap = true })
+
+-- Move lines up/down
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move line down' })
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move line up' })
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
+
+-- Indent while remaining in visual mode
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
+
+-- Keeping the cursor centered
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search result (centered)' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search result (centered)' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half page down (centered)' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half page up (centered)' })
+
+-- Better J behavior
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines and keep cursor position' })
+
+-- Buffer navigation
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>bp', ':bprevious<CR>', { desc = 'Previous buffer' })
+
+-- Tab navigation
+vim.keymap.set('n', '<leader>tc', '<cmd>tabclose<cr>', { desc = 'Close tab page' })
+vim.keymap.set('n', '<leader>tn', '<cmd>tab split<cr>', { desc = 'New tab page' })
+vim.keymap.set('n', '<leader>to', '<cmd>tabonly<cr>', { desc = 'Close other tab pages' })
+
+-- Resizing
+vim.keymap.set('n', '<C-Up>', ':resize +2<CR>', { desc = 'Increase window height' })
+vim.keymap.set('n', '<C-Down>', ':resize -2<CR>', { desc = 'Decrease window height' })
+vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', { desc = 'Decrease window width' })
+vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', { desc = 'Increase window width' })
 
 -- vim: ts=2 sts=2 sw=2 et
